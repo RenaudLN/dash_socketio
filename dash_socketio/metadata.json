@@ -1,0 +1,53 @@
+{
+  "src/ts/components/DashSocketIO.tsx": {
+    "displayName": "DashSocketIO",
+    "description": "Socket.IO Dash component.",
+    "props": {
+      "url": {
+        "description": "The socket.io server URL",
+        "required": false,
+        "type": {
+          "name": "string",
+          "raw": "string"
+        }
+      },
+      "eventNames": {
+        "description": "Name of Socket.IO events to listen to",
+        "required": false,
+        "type": {
+          "name": "arrayOf",
+          "value": {
+            "name": "string",
+            "raw": "string"
+          },
+          "raw": "string[]"
+        }
+      },
+      "connected": {
+        "description": "Whether the client is connected to the websocket - READONLY",
+        "required": false,
+        "type": {
+          "name": "bool",
+          "raw": "boolean"
+        }
+      },
+      "id": {
+        "description": "Unique ID to identify this component in Dash callbacks.",
+        "required": false,
+        "type": {
+          "name": "string",
+          "raw": "string"
+        }
+      },
+      "setProps": {
+        "description": "Update props to trigger callbacks.",
+        "required": true,
+        "type": {
+          "name": "func",
+          "raw": "(props: Record<string, any>) => void"
+        }
+      }
+    },
+    "isContext": false
+  }
+}
