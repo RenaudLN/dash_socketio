@@ -36,9 +36,17 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
   },
-  "author": "Renaud Lainé <Enter your email (For package.json)>",
+  "author": "Renaud Lainé",
   "license": "MIT",
   "dependencies": {
     "socket.io-client": "^4.7.4"
-  }
+  },
+  "directories": {
+    "man": "man"
+  },
+  "keywords": [
+    "websocket",
+    "socketio",
+    "dash"
+  ]
 }
