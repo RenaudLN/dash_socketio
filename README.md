@@ -154,6 +154,10 @@ if __name__ == '__main__':
 
 ```
 
+The events can be accessed in a clientsside callback via:
+` Input("socketio", "data-eventName")`
+Note that the event needs top trigger a client side callback.
+
 ## Development
 ### Getting Started
 
