@@ -1,7 +1,7 @@
 
 name = "DashSocketio"
 uuid = "1b08a953-4be3-4667-9a23-07d571ed62fd"
-authors = ["Renaud Lainé <Enter your email (For package.json)>"]
+authors = ["Renaud Lainé <>"]
 version = "1.0.0"
 
 [deps]

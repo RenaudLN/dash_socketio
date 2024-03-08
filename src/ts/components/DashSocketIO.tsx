@@ -18,7 +18,9 @@ type Props = {
 const DashSocketIO = (props: Props) => {
     const { url, setProps, eventNames } = props;
 
-    const socket = React.useMemo(() => io(url || undefined), [])
+    const socket = React.useMemo(() => io(
+      url || undefined, {auth: {pathname: window.location.pathname}}
+    ), [])
 
     React.useEffect(() => {
       function onConnect() {
@@ -35,6 +37,7 @@ const DashSocketIO = (props: Props) => {
       return () => {
         socket.off('connect', onConnect);
         socket.off('disconnect', onDisconnect);
+        socket.disconnect();
       };
     }, []);
 

@@ -1,7 +1,7 @@
 % Auto-generated: do not edit by hand
-\name{socketIO}
+\name{dashSocketIO}
 
-\alias{socketIO}
+\alias{dashSocketIO}
 
 \title{DashSocketIO component}
 
@@ -10,7 +10,8 @@ Socket.IO Dash component.
 }
 
 \usage{
-socketIO(id=NULL, connected=NULL, eventNames=NULL, url=NULL)
+dashSocketIO(id=NULL, connected=NULL, eventNames=NULL, socketId=NULL,
+url=NULL)
 }
 
 \arguments{
@@ -19,6 +20,8 @@ socketIO(id=NULL, connected=NULL, eventNames=NULL, url=NULL)
 \item{connected}{Logical. Whether the client is connected to the websocket - READONLY}
 
 \item{eventNames}{List of characters. Name of Socket.IO events to listen to}
+
+\item{socketId}{Character. The socket ID}
 
 \item{url}{Character. The socket.io server URL}
 }

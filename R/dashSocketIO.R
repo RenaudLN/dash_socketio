@@ -1,9 +1,9 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
 #' @export
-socketIO <- function(id=NULL, connected=NULL, eventNames=NULL, url=NULL) {
-
-    props <- list(id=id, connected=connected, eventNames=eventNames, url=url)
+dashSocketIO <- function(id=NULL, connected=NULL, eventNames=NULL, socketId=NULL, url=NULL) {
+    
+    props <- list(id=id, connected=connected, eventNames=eventNames, socketId=socketId, url=url)
     if (length(props) > 0) {
         props <- props[!vapply(props, is.null, logical(1))]
     }
@@ -11,7 +11,7 @@ socketIO <- function(id=NULL, connected=NULL, eventNames=NULL, url=NULL) {
         props = props,
         type = 'DashSocketIO',
         namespace = 'dash_socketio',
-        propNames = c('id', 'connected', 'eventNames', 'url'),
+        propNames = c('id', 'connected', 'eventNames', 'socketId', 'url'),
         package = 'dashSocketio'
         )
 

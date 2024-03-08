@@ -31,6 +31,14 @@
           "raw": "boolean"
         }
       },
+      "socketId": {
+        "description": "The socket ID",
+        "required": false,
+        "type": {
+          "name": "string",
+          "raw": "string"
+        }
+      },
       "id": {
         "description": "Unique ID to identify this component in Dash callbacks.",
         "required": false,

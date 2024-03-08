@@ -1,2 +1,3 @@
 recursive-include dash_socketio/** *.js *.css *.json *.html
+include package.json
 prune tests

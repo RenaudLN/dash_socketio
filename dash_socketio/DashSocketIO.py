@@ -18,6 +18,9 @@ Keyword arguments:
 - eventNames (list of strings; optional):
     Name of Socket.IO events to listen to.
 
+- socketId (string; optional):
+    The socket ID.
+
 - url (string; optional):
     The socket.io server URL."""
     _children_props = []
@@ -25,10 +28,10 @@ Keyword arguments:
     _namespace = 'dash_socketio'
     _type = 'DashSocketIO'
     @_explicitize_args
-    def __init__(self, url=Component.UNDEFINED, eventNames=Component.UNDEFINED, connected=Component.UNDEFINED, id=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['id', 'connected', 'eventNames', 'url']
+    def __init__(self, url=Component.UNDEFINED, eventNames=Component.UNDEFINED, connected=Component.UNDEFINED, socketId=Component.UNDEFINED, id=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['id', 'connected', 'eventNames', 'socketId', 'url']
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'connected', 'eventNames', 'url']
+        self.available_properties = ['id', 'connected', 'eventNames', 'socketId', 'url']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()

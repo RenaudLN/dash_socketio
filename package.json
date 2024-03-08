@@ -36,7 +36,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
   },
-  "author": "Renaud Lainé",
+  "author": "Renaud Lainé <>",
   "license": "MIT",
   "dependencies": {
     "socket.io-client": "^4.7.4"
