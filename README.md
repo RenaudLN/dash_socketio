@@ -1,7 +1,7 @@
 # Dash Socketio
 
 This package integration of the [Flask SocketIO](https://flask-socketio.readthedocs.io/en/latest/) into Dash.
-Flask SocketIO provides the server side capabilities of pushing data to clients while Dash SocketIO enables the Dashboard to recieve and process the messages.
+Flask SocketIO provides the server-side capabilities of pushing data to clients, while Dash SocketIO enables the Dashboard to recieve and process the messages.
 
 ## Install
 
@@ -9,10 +9,10 @@ Flask SocketIO provides the server side capabilities of pushing data to clients 
 pip install dash_socketio
 ```
 ## Use Cases:
-There are several potential usecases which Dash SocketIO enables:
-1. Send update messages while a callback is processing e.g. streaming responeses or downloading data
-2. Sending messages to multiple users at once and accross clients e.g. chat applications
-3. Align data or filters for the same user accross clients.
+There are several potential use cases which Dash SocketIO enables:
+1. Send update messages while a callback is processing, e.g. streaming responses or downloading data
+2. Sending messages to multiple users at once and across clients, e.g. chat applications
+3. Align data or filters for the same user across clients.
 
 ## Demo and Quickstart
 
@@ -156,7 +156,7 @@ if __name__ == '__main__':
 
 The events can be accessed in a clientsside callback via:
 ` Input("socketio", "data-eventName")`
-Note that the event needs top trigger a client side callback.
+Note that the event needs top trigger a client-side callback.
 
 ## Development
 ### Getting Started
