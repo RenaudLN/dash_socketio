@@ -23,7 +23,7 @@ url=NULL)
 
 \item{socketId}{Character. The socket ID}
 
-\item{url}{Character. The socket.io server URL}
+\item{url}{Character. The socket.io namespace url, defaults to window.location.origin}
 }
 
 \value{named list of JSON elements corresponding to React.js properties and their values}

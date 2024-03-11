@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import {DashComponentProps} from '../props';
 
 type Props = {
-  /** The socket.io server URL */
+  /** The socket.io namespace url, defaults to window.location.origin */
   url?: string
   /** Name of Socket.IO events to listen to */
   eventNames?: string[]
@@ -20,14 +20,14 @@ const DashSocketIO = (props: Props) => {
 
     const socket = React.useMemo(() => io(
       url || undefined, {auth: {pathname: window.location.pathname}}
-    ), [])
+    ), [url])
 
     React.useEffect(() => {
-      function onConnect() {
+      const onConnect = () => {
         setProps({connected: true, socketId: socket.id});
       }
 
-      function onDisconnect() {
+      const onDisconnect = () => {
         setProps({connected: false, socketId: null});
       }
 
@@ -39,7 +39,7 @@ const DashSocketIO = (props: Props) => {
         socket.off('disconnect', onDisconnect);
         socket.disconnect();
       };
-    }, []);
+    }, [socket]);
 
     React.useEffect(() => {
       if (!eventNames || eventNames.length === 0) {
@@ -54,7 +54,7 @@ const DashSocketIO = (props: Props) => {
       return () => {
         eventNames.forEach((eventName) => socket.off(eventName, onEvent(eventName)));
       };
-    }, [eventNames])
+    }, [socket, eventNames])
 
     return null
 }

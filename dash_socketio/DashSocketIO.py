@@ -22,7 +22,7 @@ Keyword arguments:
     The socket ID.
 
 - url (string; optional):
-    The socket.io server URL."""
+    The socket.io namespace url, defaults to window.location.origin."""
     _children_props = []
     _base_nodes = ['children']
     _namespace = 'dash_socketio'

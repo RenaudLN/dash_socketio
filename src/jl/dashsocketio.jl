@@ -12,7 +12,7 @@ Keyword arguments:
 - `connected` (Bool; optional): Whether the client is connected to the websocket - READONLY
 - `eventNames` (Array of Strings; optional): Name of Socket.IO events to listen to
 - `socketId` (String; optional): The socket ID
-- `url` (String; optional): The socket.io server URL
+- `url` (String; optional): The socket.io namespace url, defaults to window.location.origin
 """
 function dashsocketio(; kwargs...)
         available_props = Symbol[:id, :connected, :eventNames, :socketId, :url]

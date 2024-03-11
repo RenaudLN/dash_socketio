@@ -4,7 +4,7 @@
     "description": "Socket.IO Dash component.",
     "props": {
       "url": {
-        "description": "The socket.io server URL",
+        "description": "The socket.io namespace url, defaults to window.location.origin",
         "required": false,
         "type": {
           "name": "string",
