@@ -39,7 +39,7 @@
   "author": "Renaud Lainé <>",
   "license": "MIT",
   "dependencies": {
-    "socket.io-client": "^4.7.4"
+    "socket.io-client": "^4.7.5"
   },
   "directories": {
     "man": "man"

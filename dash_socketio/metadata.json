@@ -1,42 +1,30 @@
 {
   "src/ts/components/DashSocketIO.tsx": {
     "displayName": "DashSocketIO",
-    "description": "Socket.IO Dash component.",
+    "description": "",
     "props": {
       "url": {
-        "description": "The socket.io namespace url, defaults to window.location.origin",
-        "required": false,
+        "description": "",
+        "required": true,
         "type": {
           "name": "string",
           "raw": "string"
         }
       },
-      "eventNames": {
-        "description": "Name of Socket.IO events to listen to",
-        "required": false,
-        "type": {
-          "name": "arrayOf",
-          "value": {
-            "name": "string",
-            "raw": "string"
-          },
-          "raw": "string[]"
-        }
-      },
-      "connected": {
-        "description": "Whether the client is connected to the websocket - READONLY",
+      "debug": {
+        "description": "",
         "required": false,
         "type": {
           "name": "bool",
           "raw": "boolean"
         }
       },
-      "socketId": {
-        "description": "The socket ID",
+      "send": {
+        "description": "",
         "required": false,
         "type": {
-          "name": "string",
-          "raw": "string"
+          "name": "object",
+          "raw": "object"
         }
       },
       "id": {

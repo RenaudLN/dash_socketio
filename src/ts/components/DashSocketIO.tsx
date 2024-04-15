@@ -1,62 +1,89 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { io } from 'socket.io-client';
-import {DashComponentProps} from '../props';
+import { DashComponentProps } from '../props';
 
 type Props = {
-  /** The socket.io namespace url, defaults to window.location.origin */
-  url?: string
-  /** Name of Socket.IO events to listen to */
-  eventNames?: string[]
-  /** Whether the client is connected to the websocket - READONLY */
-  connected?: boolean
-  /** The socket ID */
-  socketId?: string
+  url: string,
+  debug?: boolean,
+  send?: object,
 } & DashComponentProps;
-/**
- * Socket.IO Dash component.
- */
+
 const DashSocketIO = (props: Props) => {
-    const { url, setProps, eventNames } = props;
+  const { url, send, debug = false, setProps } = props;
 
-    const socket = React.useMemo(() => io(
-      url || undefined, {auth: {pathname: window.location.pathname}}
-    ), [url])
+  const [socketId, setSocketId] = useState<string | null>(null);
+  const [connected, setConnected] = useState<boolean>(false);
 
-    React.useEffect(() => {
-      const onConnect = () => {
-        setProps({connected: true, socketId: socket.id});
+  const socket = React.useMemo(() => io(
+    url || undefined, { auth: { pathname: window.location.pathname } }
+  ), [url])
+
+  React.useEffect(() => {
+    const onConnect = () => {
+      if (debug) {
+        console.log(`Connected at ${new Date().toISOString()}`)
       }
+      setSocketId(socket.id);
+      setConnected(true);
+    }
 
-      const onDisconnect = () => {
-        setProps({connected: false, socketId: null});
+    const onDisconnect = () => {
+      if (debug) {
+        console.log(`Disconnected at ${new Date().toISOString()}`)
       }
+      setSocketId(null);
+      setConnected(false);
+    }
 
-      socket.on('connect', onConnect);
-      socket.on('disconnect', onDisconnect);
-
-      return () => {
-        socket.off('connect', onConnect);
-        socket.off('disconnect', onDisconnect);
-        socket.disconnect();
-      };
-    }, [socket]);
-
-    React.useEffect(() => {
-      if (!eventNames || eventNames.length === 0) {
-        return;
+    const onEvent = (event: object) => {
+      if (debug) {
+        console.log(`Event received at ${new Date().toISOString()} - ${JSON.stringify(event)}`)
       }
-      function onEvent(eventName: string) {
-        return (data: any) => {
-          setProps({[`data-${eventName}`]: data});
+      for (const [key, value] of Object.entries(event)) {
+        var data_key = `data-${key}`
+        if (debug) {
+          console.log(`Setting ${data_key} to ${value}`)
         }
+        // Jim: In case the suuplied value equals the current value, we need to set it to null first
+        // otherwise react won't update the value in the frontend as there is no change.
+        // I don't think this incurs a performance penalty but please correct me if I'm wrong.
+        setProps({ [data_key]: null })
+        setProps({ [data_key]: value })
       }
-      eventNames.forEach((eventName) => socket.on(eventName, onEvent(eventName)));
-      return () => {
-        eventNames.forEach((eventName) => socket.off(eventName, onEvent(eventName)));
-      };
-    }, [socket, eventNames])
+    }
 
-    return null
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on("ws-event", onEvent);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off("ws-event", onEvent);
+      socket.disconnect();
+    };
+  }, [socket]);
+
+  React.useEffect(() => {
+    if (socket && send) {
+      const event = send['event'];
+      const data = send['data'];
+
+      if (data) {
+        if (debug) {
+          console.log(`Sending event ${event} at ${new Date().toISOString()} - ${JSON.stringify(data)}`)
+        }
+        socket.emit(event, data);
+      } else {
+        if (debug) {
+          console.log(`Sending event ${event} at ${new Date().toISOString()}`)
+        }
+        socket.emit(event);
+      }
+    }
+  }, [send]);
+
+  return null;
 }
 
 DashSocketIO.defaultProps = {};
