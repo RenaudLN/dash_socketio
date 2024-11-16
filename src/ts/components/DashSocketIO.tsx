@@ -20,8 +20,6 @@ type Props = {
  */
 const DashSocketIO = (props: Props) => {
     const { url, path, setProps, eventNames } = props;
-    console.log(url);
-    console.log(path);
   const socket = React.useMemo(() => io(
     url || undefined, {
     path: path || '/socket.io',
