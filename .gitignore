@@ -278,3 +278,11 @@ GitHub.sublime-settings
 # Julia manifest file names
 Manifest.toml
 JuliaManifest.toml
+
+dash_socketio/
+deps/
+inst/
+man/
+R/
+*.jl
+Project.toml
