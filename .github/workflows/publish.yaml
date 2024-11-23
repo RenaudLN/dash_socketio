@@ -1,0 +1,29 @@
+name: Publish to Pypi
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+
+  publish:
+    runs-on: ubuntu-latest
+    # if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+
+      - name: Install dependencies
+        run: |
+          pip install build twine "importlib_metadata<8"
+
+      - name: Build and Publish package
+        run: |
+          python3 -m build
+          twine upload dist/* -u __token__ -p ${{secrets.PYPI_TOKEN}} --non-interactive
