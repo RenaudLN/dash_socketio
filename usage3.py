@@ -1,31 +1,35 @@
-import time
 import uuid
 from dash_socketio import DashSocketIO
 import dash_mantine_components as dmc
-from dash import ALL, Dash, Input, Output, State, callback, clientside_callback, ctx, html, no_update
+from dash import ALL, Dash, Input, Output, State, _dash_renderer, callback, clientside_callback, ctx, html, no_update
 from flask import session
 from flask_socketio import SocketIO, emit, join_room
 
-app = Dash(__name__)
+_dash_renderer._set_react_version("18.3.1")
+app = Dash(__name__, external_stylesheets=dmc.styles.ALL)
 app.server.secret_key = "Test!"
 
 socketio = SocketIO(app.server)
 
-app.layout = dmc.NotificationsProvider(
-    [
-        dmc.Title("Hello Socket.IO!", mb="xl"),
-        dmc.Group(
-            [
-                dmc.TextInput(id={"type": "control", "id": "name"}, debounce=500, label="Name"),
-                dmc.Select(data=["Montreal", "NYC", "Paris"], id={"type": "control", "id": "city"}, label="City"),
-                dmc.SegmentedControl(data=["Male", "Female"], id={"type": "control", "id": "gender"}),
-            ],
-            align="end",
-        ),
-        html.Div(id="dummy"),
-        DashSocketIO(id='socketio', eventNames=["syncControl"]),
-    ],
-    position="bottom-right",
+app.layout = dmc.MantineProvider(
+    dmc.Container(
+        [
+            dmc.NotificationProvider(position="top-right"),
+            dmc.Title("Hello Socket.IO!", mb="xl"),
+            dmc.Group(
+                [
+                    dmc.TextInput(id={"type": "control", "id": "name"}, debounce=500, label="Name"),
+                    dmc.Select(data=["Montreal", "NYC", "Paris"], id={"type": "control", "id": "city"}, label="City"),
+                    dmc.SegmentedControl(data=["Male", "Female"], id={"type": "control", "id": "gender"}),
+                ],
+                align="end",
+                p="1rem 2rem",
+            ),
+            html.Div(id="dummy"),
+            DashSocketIO(id='socketio', eventNames=["syncControl"]),
+        ],
+        p="1rem 2rem",
+    ),
 )
 
 @app.server.before_request

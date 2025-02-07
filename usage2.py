@@ -1,29 +1,33 @@
 import json
 from dash_socketio import DashSocketIO
 import dash_mantine_components as dmc
-from dash import Dash, Input, Output, State, callback, clientside_callback, html, no_update
+from dash import Dash, Input, Output, State, _dash_renderer, callback, clientside_callback, html, no_update
 from flask_socketio import SocketIO, emit
 from plotly.io.json import to_json_plotly
 
-app = Dash(__name__)
+_dash_renderer._set_react_version("18.3.1")
+app = Dash(__name__, external_stylesheets=dmc.styles.ALL)
 app.server.secret_key = "Test!"
 
 socketio = SocketIO(app.server)
 
-app.layout = dmc.NotificationsProvider(
-    [
-        dmc.Title("Hello Socket.IO!", mb="xl"),
-        dmc.Stack(
-            [
-                dmc.Textarea(id="msg", minRows=5, placeholder="Write something in the chat"),
-                html.Div(dmc.Button("Send", id="send", mb="md", disabled=True)),
-            ],
-            spacing="xs",
-        ),
-        dmc.Stack([], id="chat-messages", style={"maxWidth": "60ch"}),
-        DashSocketIO(id="socketio", eventNames=["chatMsg"]),
-    ],
-    position="bottom-right",
+app.layout = dmc.MantineProvider(
+    dmc.Container(
+        [
+            dmc.NotificationProvider(position="top-right"),
+            dmc.Title("Hello Socket.IO!", mb="xl"),
+            dmc.Stack(
+                [
+                    dmc.Textarea(id="msg", minRows=5, placeholder="Write something in the chat"),
+                    html.Div(dmc.Button("Send", id="send", mb="md", disabled=True)),
+                ],
+                gap="xs",
+            ),
+            dmc.Stack([], id="chat-messages", style={"maxWidth": "60ch"}),
+            DashSocketIO(id="socketio", eventNames=["chatMsg"]),
+        ],
+        p="1rem 2rem",
+    ),
 )
 
 
@@ -42,12 +46,11 @@ def jsonify_data(data):
 def display_status(send, msg, socket_id):
     if not send or not msg:
         return no_update
-
     emit(
         "chatMsg",
         jsonify_data(dmc.Paper(
             [
-                dmc.Text(f"{socket_id} says", size="xs", color="dimmed", mb=4),
+                dmc.Text(f"{socket_id} says", size="xs", c="dimmed", mb=4),
                 dmc.Text(msg),
             ],
             p="0.5rem 1rem",
@@ -55,7 +58,7 @@ def display_status(send, msg, socket_id):
         )),
         namespace="/",
         broadcast=True,
-        skip_sid=socket_id,
+        # skip_sid=socket_id,
     )
     return ""
 
@@ -66,10 +69,7 @@ clientside_callback(
 )
 
 clientside_callback(
-    """(msg, children) => {
-        if (!msg) return dash_clientside.no_update
-        return [...children, msg]
-    }""",
+    """(msg, children) => !msg ? dash_clientside.no_update : [...children, msg]""",
     Output("chat-messages", "children"),
     Input("socketio", "data-chatMsg"),
     State("chat-messages", "children"),
