@@ -34,14 +34,15 @@ type Props = {
  * Socket.IO Dash component.
  */
 const DashSocketIO = (props: Props) => {
-  const { url, options = {}, setProps, eventNames } = props;
+  const { url, options, setProps, eventNames } = props;
+  const { auth, ...otherOptions } = options || {};
 
   const socket = React.useMemo(() => io(
     url || undefined,
     {
-      ...options,
+      ...otherOptions,
       auth: {
-        ...options.auth,
+        ...auth,
         pathname: window.location.pathname
       }
     }
