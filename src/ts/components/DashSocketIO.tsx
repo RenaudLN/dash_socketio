@@ -15,7 +15,6 @@ type SocketOptions = {
   query?: Record<string, any>;
   /** Authentication data */
   auth?: Record<string, any>;
-  [key: string]: any;
 };
 
 type Props = {
@@ -31,12 +30,6 @@ type Props = {
   socketId?: string;
 } & DashComponentProps;
 
-const defaultOptions: SocketOptions = {
-  path: '/socket.io',
-  forceNew: false,
-  autoConnect: true
-};
-
 /**
  * Socket.IO Dash component.
  */
@@ -46,7 +39,6 @@ const DashSocketIO = (props: Props) => {
   const socket = React.useMemo(() => io(
     url || undefined,
     {
-      ...defaultOptions,
       ...options,
       auth: {
         ...options.auth,
