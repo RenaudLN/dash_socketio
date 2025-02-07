@@ -19,11 +19,16 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v4
 
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+
       - name: Install dependencies
         run: |
           pip install build twine "importlib_metadata<8"
+          pip install -r requirements.txt
 
       - name: Build and Publish package
         run: |
+          npm run build
           python3 -m build
           twine upload dist/* -u __token__ -p ${{secrets.PYPI_TOKEN}} --non-interactive
