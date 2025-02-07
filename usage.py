@@ -2,28 +2,32 @@ import time
 import uuid
 from dash_socketio import DashSocketIO
 import dash_mantine_components as dmc
-from dash import Dash, Input, Output, State, callback, clientside_callback, html, no_update
+from dash import Dash, Input, Output, State, _dash_renderer, callback, clientside_callback, html, no_update
 from flask_socketio import SocketIO, emit
 
-app = Dash(__name__)
+_dash_renderer._set_react_version("18.3.1")
+app = Dash(__name__, external_stylesheets=dmc.styles.ALL)
 app.server.secret_key = "Test!"
 
 socketio = SocketIO(app.server)
 
-app.layout = dmc.NotificationsProvider(
-    [
-        dmc.Title("Hello Socket.IO!", mb="xl"),
-        dmc.Stack(
-            [
-                dmc.Textarea(id="dummy", minRows=5, placeholder="Ask LoremLM something..."),
-                html.Div(dmc.Button("Ask LoremLM", id="btn", mb="md", disabled=True)),
-            ]
-        ),
-        dmc.Text(id="results", style={"maxWidth": "60ch"}),
-        html.Div(id="notification_wrapper"),
-        DashSocketIO(id='socketio', eventNames=["notification", "stream"]),
-    ],
-    position="bottom-right",
+app.layout = dmc.MantineProvider(
+    dmc.Container(
+        [
+            dmc.NotificationProvider(position="top-right"),
+            dmc.Title("Hello Socket.IO!", mb="xl"),
+            dmc.Stack(
+                [
+                    dmc.Textarea(id="dummy", minRows=5, placeholder="Ask LoremLM something..."),
+                    html.Div(dmc.Button("Ask LoremLM", id="btn", mb="md", disabled=True)),
+                ]
+            ),
+            dmc.Text(id="results", style={"maxWidth": "60ch"}),
+            html.Div(id="notification_wrapper"),
+            DashSocketIO(id='socketio', eventNames=["notification", "stream"]),
+        ],
+        p="1rem 2rem",
+    ),
 )
 
 
