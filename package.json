@@ -1,6 +1,6 @@
 {
   "name": "dash_socketio",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Client Socket.IO for Dash",
   "main": "index.ts",
   "repository": {
